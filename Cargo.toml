@@ -1,6 +1,6 @@
 [package]
 name = "cargo-cleanall"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["LeSnake <dev.lesnake@posteo.de>"]
 description = "Cargo plugin to clean all cargo projects in a directory"
