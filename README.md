@@ -26,7 +26,7 @@ INFO [cargo_cleanall] 1.2 GB => 117.8 MB (-1.1 GB: -90.303 %)
 ```
 
 ## Features
-+ Asyncronus scan and cleanup for fast performance
++ Asynchronous scan and cleanup for fast performance
 + Show size from before and after as well as an percentage (Can be turned off).
 + Option to include hidden files
 + Option to ignore folders
