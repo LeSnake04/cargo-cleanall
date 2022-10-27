@@ -16,7 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Install mold
+      run: sudo apt imold -run install mold
     - name: Build
-      run: cargo build --verbose
+      run: mold -run cargo build --verbose
     - name: Run tests
-      run: cargo test --verbose
+      run: mold -run cargo test --verbose
