@@ -16,8 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Install mold
-      run: sudo apt install mold
+    - uses: rui314/setup-mold@v1
     - name: Build
       run: mold -run cargo build --verbose
     - name: Run tests
