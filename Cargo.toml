@@ -1,13 +1,13 @@
 [package]
 name = "cargo-cleanall"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["LeSnake <dev.lesnake@posteo.de>"]
 description = "Cargo plugin to clean all cargo projects in a directory"
 license = "AGPL-3.0"
 repository = "https://github.com/LeSnake04/cargo-cleanall"
+categories = ["cli", "cargo", "tool"]
 publish = true
-toolchain = "stable"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
