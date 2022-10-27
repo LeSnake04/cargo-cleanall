@@ -57,22 +57,12 @@ impl TryFrom<&ArgMatches> for CargoClean {
 						.absolutize()
 						.unwrap_or_else(|_| panic!("failed to absolutize {}", p.display()))
 						.to_path_buf();
-					if out
-						.file_name()
-						.unwrap_or_else(|| panic!("Parent of {} not found", out.display()))
-						!= "Cargo.toml"
-					{
-						if out.is_file() {
-							out = out
-								.parent()
-								.unwrap_or_else(|| {
-									panic!("Failed to get parent of {}", out.display())
-								})
-								.to_path_buf()
-						}
-						out.push("Cargo.toml");
+					if out.is_file() {
+						out = out
+							.parent()
+							.unwrap_or_else(|| panic!("Failed to get parent of {}", out.display()))
+							.to_path_buf();
 					}
-					// dbg!(&out);
 					out
 				})
 				.collect()
@@ -266,15 +256,6 @@ async fn handle_task(
 			let p = unwrap_ok_or!(p, _, continue);
 			let p_path: PathBuf = p.clone().into_path();
 			trace!("Checking for {}", p_path.display());
-			if let Some(ref i) = ignore {
-				if i.contains(&p_path) {
-					debug!(
-						"Skipped {} because its ignored",
-						p_path.parent().unwrap_or(&p_path).display()
-					);
-					continue;
-				}
-			}
 			if !hidden
 				&& p.file_name()
 					.to_str()
@@ -284,8 +265,15 @@ async fn handle_task(
 				continue;
 			}
 			if p.path().is_dir() {
-				out.tasks.push(p_path);
-				continue;
+				if let Some(ref i) = ignore {
+					if i.contains(&p_path) {
+						debug!("Skipped scaning {} because its ignored", p_path.display());
+						continue;
+					} else {
+						out.tasks.push(p_path);
+						continue;
+					}
+				}
 			}
 			if !size_only && p.file_name() == "Cargo.toml" {
 				debug!(

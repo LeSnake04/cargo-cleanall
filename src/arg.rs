@@ -30,7 +30,7 @@ pub fn matches() -> clap::ArgMatches {
 						.long("ignore")
 						.short('i')
 						.value_parser(value_parser!(PathBuf))
-						.help("Ignore projects (by folder name, not Cargo name)")
+						.help("Ignore folders")
 						.value_hint(ValueHint::DirPath)
 						.action(ArgAction::Append),
 					Arg::new("no-size")
