@@ -255,7 +255,7 @@ async fn handle_task(
 		for p in WalkDir::new(task) {
 			let p = unwrap_ok_or!(p, _, continue);
 			let p_path: PathBuf = p.clone().into_path();
-			trace!("Checking for {}", p_path.display());
+			trace!("Checking {}", p_path.display());
 			if !hidden
 				&& p.file_name()
 					.to_str()
@@ -265,12 +265,21 @@ async fn handle_task(
 				continue;
 			}
 			if p.path().is_dir() {
+				let p_path_abs: PathBuf = unwrap_ok_or!(p_path.absolutize(), e, {
+					error!("Failed to absolutize {}, because {e}", p_path.display());
+					continue;
+				})
+				.to_path_buf();
 				if let Some(ref i) = ignore {
-					if i.contains(&p_path) {
-						debug!("Skipped scaning {} because its ignored", p_path.display());
+					std::mem::drop(p_path);
+					if i.contains(&p_path_abs) {
+						debug!(
+							"Skipped scaning {} because its ignored",
+							p_path_abs.display()
+						);
 						continue;
 					} else {
-						out.tasks.push(p_path);
+						out.tasks.push(p_path_abs);
 						continue;
 					}
 				}
