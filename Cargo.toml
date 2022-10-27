@@ -7,6 +7,7 @@ description = "Cargo plugin to clean all cargo projects in a directory"
 license = "AGPL-3.0"
 repository = "https://github.com/LeSnake04/cargo-cleanall"
 publish = true
+toolchain = "stable"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
