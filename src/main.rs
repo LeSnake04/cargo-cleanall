@@ -24,7 +24,11 @@ async fn main() -> AResult<()> {
 	#[cfg(not(debug_assertions))]
 	let logdefault = "INFO";
 	flexi_logger::Logger::with(LogSpecification::env_or_parse(logdefault)?).start()?;
-	let m: ArgMatches = self::arg::matches();
+	let m: ArgMatches = match self::arg::matches().subcommand() {
+		Some(("cleanall", m)) => m.clone(),
+		_ => unreachable!("clap should ensure we don't get here"),
+	};
+	// dbg!(m.ids());
 	let dry: bool = *m.get_one("dry").ok_or(Error::GetArgFailed("dry"))?;
 	let mut cleaner = CargoClean::try_from(&m)?;
 	cleaner.get_paths(false).await;

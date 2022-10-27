@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use miette::Diagnostic;
 use thiserror::Error;
 
@@ -20,7 +22,7 @@ pub enum Error {
 	#[error("Failed to get File Name of parent")]
 	NoFileName,
 	#[error("Parent not found")]
-	ParentNotFound,
+	ParentNotFound(PathBuf),
 	#[error("Failed to parse Args")]
 	ParseArgsError(#[from] clap::parser::MatchesError),
 	#[error("Size not Calculated")]

@@ -52,18 +52,28 @@ impl TryFrom<&ArgMatches> for CargoClean {
 				.ok_or(Error::ArgNotSet("no-size"))?)
 			.then_some(Vec::new()),
 			ignore: m.get_many("ignore").map(|i: ValuesRef<PathBuf>| {
-				i.filter_map(|p: &PathBuf| {
-					let mut out = unwrap_ok_or!(p.absolutize(), e, {
-						error!("Skipped {}: Error absolitizing: {e}", p.display());
-						None?
-					})
-					.to_path_buf();
-					if let Some(n) = out.file_name() {
-						if n != "Cargo.toml" {
-							out.push("Cargo.toml");
+				i.map(|p: &PathBuf| {
+					let mut out = p
+						.absolutize()
+						.unwrap_or_else(|_| panic!("failed to absolutize {}", p.display()))
+						.to_path_buf();
+					if out
+						.file_name()
+						.unwrap_or_else(|| panic!("Parent of {} not found", out.display()))
+						!= "Cargo.toml"
+					{
+						if out.is_file() {
+							out = out
+								.parent()
+								.unwrap_or_else(|| {
+									panic!("Failed to get parent of {}", out.display())
+								})
+								.to_path_buf()
 						}
+						out.push("Cargo.toml");
 					}
-					Some(out)
+					// dbg!(&out);
+					out
 				})
 				.collect()
 			}),
@@ -223,7 +233,7 @@ fn clear_workspace(manifest: PathBuf) -> MRunResult {
 	#[cfg(debug_assertions)]
 	if manifest
 		.parent()
-		.ok_or(Error::ParentNotFound)?
+		.ok_or_else(|| Error::ParentNotFound(manifest.clone()))?
 		.file_name()
 		.ok_or(Error::NoFileName)?
 		== "cargo-cleanall"
