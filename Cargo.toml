@@ -6,7 +6,8 @@ authors = ["LeSnake <dev.lesnake@posteo.de>"]
 description = "Cargo plugin to clean all cargo projects in a directory"
 license = "AGPL-3.0"
 repository = "https://github.com/LeSnake04/cargo-cleanall"
-categories = ["cli", "cargo", "tool"]
+categories = ["development-tools::cargo-plugins", "command-line-utilities", "development-tools"]
+keywords = ["tool", "cli", "cargo"]
 publish = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
