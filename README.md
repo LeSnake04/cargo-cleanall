@@ -21,7 +21,7 @@ Options:
 
 ## Output
 ```
-$ Cargo cleanall .
+$ cargo cleanall .
 INFO [cargo_cleanall] 1.2 GB => 117.8 MB (-1.1 GB: -90.303 %)
 ```
 
