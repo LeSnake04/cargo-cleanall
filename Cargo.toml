@@ -20,6 +20,6 @@ log = "0.4"
 miette = { version = "5.3", features = ["fancy"] }
 path-absolutize = "3.0"
 thiserror = "1.0"
-tokio = { version = "1.21", features = ["tokio-macros", "rt", "macros", "rt-multi-thread"] }
+tokio = { version = "1.23", features = ["tokio-macros", "rt", "macros", "rt-multi-thread"] }
 unwrap_or = "1.0"
 walkdir = "2.3"
