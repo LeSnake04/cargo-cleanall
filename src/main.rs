@@ -54,7 +54,7 @@ async fn main() -> AResult<()> {
 		let difference_str: String = {
 			let mut out = human_bytes::human_bytes(difference as f64);
 			if difference > 0 {
-				out = format!("-{}", out);
+				out = format!("-{out}");
 			}
 			out
 		};
